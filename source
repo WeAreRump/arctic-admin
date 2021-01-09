@@ -83,6 +83,8 @@ CommandBar.TextXAlignment = Enum.TextXAlignment.Left
 AAMouse = Players.LocalPlayer:GetMouse()
 Noclip = false
 
+Prefix = ";"
+
 RunService.Stepped:Connect(function()
 	if Noclip then
 		Players.LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(11)
@@ -96,14 +98,6 @@ end
 function maximize()
 	CommandBarMain:TweenPosition(UDim2.new(0.272, 0, 0.811, 0), "Out", "Quart", 0.2)
 end
-
-AAMouse.KeyDown:Connect(function(key)
-	if (key == Enum.KeyCode.Semicolon) then
-		CommandBar:CaptureFocus()
-		spawn(function() repeat CommandBar.Text = "" until CommandBar.Text == "" end)
-		maximize()
-	end
-end)
 
 UserInputService.InputBegan:Connect(function(input, chat)
 	if input.KeyCode == Enum.KeyCode.Return or input.KeyCode == Enum.KeyCode.KeypadEnter and not chat then
@@ -122,5 +116,13 @@ UserInputService.InputBegan:Connect(function(input, chat)
 		minimize()
 		wait(0.2)
 		CommandBar.Text = ""
+	end
+end)
+
+AAMouse.KeyDown:Connect(function(key)
+	if key == Prefix then
+		CommandBar:CaptureFocus()
+		spawn(function() repeat CommandBar.Text = "" until CommandBar.Text == "" end)
+		maximize()
 	end
 end)
