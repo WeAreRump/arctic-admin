@@ -1,0 +1,126 @@
+if AA_LOADED and not _G.AA_DEBUG == true then
+	error("Arctic Admin is already executed!",0)
+	return
+end
+
+pcall(function() getgenv().AA_LOADED = true end)
+
+while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players") or not game:GetService("UserInputService") or not game:GetService("RunService") do wait() end
+
+Players = game:GetService("Players")
+RunService = game:GetService("RunService")
+UserInputService = game:GetService("UserInputService")
+
+CommandBarMain = Instance.new("Frame")
+CommandBarStartText = Instance.new("TextLabel")
+CommandBar = Instance.new("TextBox")
+
+function randomstring()
+	local length = math.random(10,20)
+	local array = {}
+	for i = 1, length do
+		array[i] = string.char(math.random(32, 126))
+	end
+	return table.concat(array)
+end
+
+COREGUI = game:GetService("CoreGui")
+PARENT = nil
+if (not is_sirhurt_closure) and (syn and syn.protect_gui) then
+	local ArcticAdmin = Instance.new("ScreenGui")
+	ArcticAdmin.Name = randomstring()
+	syn.protect_gui(ArcticAdmin)
+	ArcticAdmin.Parent = COREGUI
+	PARENT = ArcticAdmin
+elseif get_hidden_gui or gethui then
+	local hiddenUI = get_hidden_gui or gethui
+	local ArcticAdmin = Instance.new("ScreenGui")
+	ArcticAdmin.Name = randomstring()
+	ArcticAdmin.Parent = hiddenUI()
+	PARENT = ArcticAdmin
+elseif COREGUI:FindFirstChild('RobloxGui') then
+	PARENT = COREGUI.RobloxGui
+else
+	local ArcticAdmin = Instance.new("ScreenGui")
+	ArcticAdmin.Name = randomstring()
+	ArcticAdmin.Parent = COREGUI
+	PARENT = ArcticAdmin
+end
+
+CommandBarMain.Name = "CommandBarMain"
+CommandBarMain.Parent = PARENT
+CommandBarMain.BackgroundColor3 = Color3.fromRGB(48, 48, 48)
+CommandBarMain.BorderSizePixel = 0
+CommandBarMain.Position = UDim2.new(0.272000015, 0, 1, 0)
+CommandBarMain.Size = UDim2.new(0, 700, 0, 30)
+
+CommandBarStartText.Name = "CommandBarStartText"
+CommandBarStartText.Parent = CommandBarMain
+CommandBarStartText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+CommandBarStartText.BackgroundTransparency = 1.000
+CommandBarStartText.Size = UDim2.new(0, 35, 0, 30)
+CommandBarStartText.Font = Enum.Font.SourceSans
+CommandBarStartText.Text = ">"
+CommandBarStartText.TextColor3 = Color3.fromRGB(255, 255, 255)
+CommandBarStartText.TextScaled = true
+CommandBarStartText.TextSize = 14.000
+CommandBarStartText.TextWrapped = true
+
+CommandBar.Name = "CommandBar"
+CommandBar.Parent = CommandBarMain
+CommandBar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+CommandBar.BackgroundTransparency = 1.000
+CommandBar.Position = UDim2.new(0.0414285697, 0, 0.200000003, 0)
+CommandBar.Size = UDim2.new(0, 671, 0, 18)
+CommandBar.ClearTextOnFocus = false
+CommandBar.Font = Enum.Font.SourceSans
+CommandBar.PlaceholderColor3 = Color3.fromRGB(139, 139, 139)
+CommandBar.Text = ""
+CommandBar.TextColor3 = Color3.fromRGB(255, 255, 255)
+CommandBar.TextSize = 14.000
+CommandBar.TextXAlignment = Enum.TextXAlignment.Left
+
+AAMouse = Players.LocalPlayer:GetMouse()
+Noclip = false
+
+RunService.Stepped:Connect(function()
+	if Noclip then
+		Players.LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(11)
+	end
+end)
+
+function minimize()
+	CommandBarMain:TweenPosition(UDim2.new(0.272, 0, 1, 0), "Out", "Quart", 0.2)
+end
+
+function maximize()
+	CommandBarMain:TweenPosition(UDim2.new(0.272, 0, 0.811, 0), "Out", "Quart", 0.2)
+end
+
+AAMouse.KeyDown:Connect(function(key)
+	if (key == Enum.KeyCode.Semicolon) then
+		CommandBar:CaptureFocus()
+		spawn(function() repeat CommandBar.Text = "" until CommandBar.Text == "" end)
+		maximize()
+	end
+end)
+
+UserInputService.InputBegan:Connect(function(input, chat)
+	if input.KeyCode == Enum.KeyCode.Return or input.KeyCode == Enum.KeyCode.KeypadEnter and not chat then
+		if CommandBar.Text == "noclip" then
+			Noclip = true
+		elseif CommandBar.Text == "clip" or CommandBar.Text == "unnoclip" then
+			Noclip = false
+		elseif CommandBar.Text == "dex" or CommandBar.Text == "explorer" then
+			loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/Dex Explorer V2.txt"))()
+		elseif CommandBar.Text == "day" then
+			game.Lighting.TimeOfDay = "03:00:00"
+		elseif CommandBar.Text == "night" then
+			game.Lighting.TimeOfDay = "14:00:00"
+		end
+		
+		minimize()
+		wait(0.2)
+		CommandBar.Text = ""
+	end
+end)
