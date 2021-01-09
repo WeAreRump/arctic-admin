@@ -109,9 +109,9 @@ UserInputService.InputBegan:Connect(function(input, chat)
 		elseif CommandBar.Text == "dex" or CommandBar.Text == "explorer" then
 			loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/Dex Explorer V2.txt"))()
 		elseif CommandBar.Text == "day" then
-			game.Lighting.TimeOfDay = "03:00:00"
-		elseif CommandBar.Text == "night" then
 			game.Lighting.TimeOfDay = "14:00:00"
+		elseif CommandBar.Text == "night" then
+			game.Lighting.TimeOfDay = "03:00:00"
 		end
 		
 		minimize()
