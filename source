@@ -76,6 +76,7 @@ CommandBar.ClearTextOnFocus = false
 CommandBar.Font = Enum.Font.SourceSans
 CommandBar.PlaceholderColor3 = Color3.fromRGB(139, 139, 139)
 CommandBar.Text = ""
+CommandBar.TextScaled = true
 CommandBar.TextColor3 = Color3.fromRGB(255, 255, 255)
 CommandBar.TextSize = 14.000
 CommandBar.TextXAlignment = Enum.TextXAlignment.Left
