@@ -112,6 +112,12 @@ UserInputService.InputBegan:Connect(function(input, chat)
 			game.Lighting.TimeOfDay = "14:00:00"
 		elseif CommandBar.Text == "night" then
 			game.Lighting.TimeOfDay = "03:00:00"
+		elseif CommandBar.Text == "ragdollenginegui" or CommandBar.Text == "ragdollengine" or CommandBar.Text == "regui" or CommandBar.Text == "reg" then
+			if game.PlaceId == 2041312716 then
+				loadstring(game:HttpGet('https://gitlab.com/Tsuniox/lua-stuff/-/raw/master/RagdollEngineGUI.lua'))()
+			else
+				game.StarterGui:SetCore("SendNotification", {Title = "Warning", Text = "This command only works in Ragdoll Engine.", Duration = 8.5})
+			end
 		end
 		
 		minimize()
